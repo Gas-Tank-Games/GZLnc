@@ -1,10 +1,12 @@
-# Welcome to GZDoom!
+# Welcome to GZLnc! (the lnc gzdoom fork)
 
-[![Continuous Integration](https://github.com/ZDoom/gzdoom/actions/workflows/continuous_integration.yml/badge.svg)](https://github.com/ZDoom/gzdoom/actions/workflows/continuous_integration.yml)
+### LnC runs on a barely modified fork of the GZDoom engine.
 
-## GZDoom is a modder-friendly OpenGL and Vulkan source port based on the DOOM engine
+**WARNING: Life n' Crime may contain content not suitable for all ages!**
 
-Copyright (c) 1998-2025 ZDoom + GZDoom teams, and contributors
+## Original GZDoom repo copyright notices:
+
+Copyright (c) 1998-2023 ZDoom + GZDoom teams, and contributors
 
 Doom Source (c) 1997 id Software, Raven Software, and contributors
 
@@ -14,15 +16,25 @@ Special thanks to Coraline of the EDGE team for allowing us to use her [README.m
 
 ### Licensed under the GPL v3
 ##### https://www.gnu.org/licenses/quick-guide-gplv3.en.html
+
 ---
 
-## How to build GZDoom
+## How to build GZLnc(Esentially GZDoom lol)
 
-To build GZDoom, please see the [wiki](https://zdoom.org/wiki/) and see the "Programmer's Corner" on the bottom-right corner of the page to build for your platform.
+It's the exact same procedure as GZDoom, follow the instructions on the [wiki](https://zdoom.org/wiki/) in the "Programmer's Corner" section and build for your platform!
 
-# Resources
+# GZDoom Resources
 - https://zdoom.org/ - Home Page
 - https://forum.zdoom.org/ - Forum
 - https://zdoom.org/wiki/ - Wiki
 - https://dsc.gg/zdoom - Discord Server
 - https://docs.google.com/spreadsheets/d/1pvwXEgytkor9SClCiDn4j5AH7FedyXS-ocCbsuQIXDU/edit?usp=sharing - Translation sheet (Google Docs)
+
+# LnC Resources
+coming soon
+
+---
+
+# Regarding Legal Stuff
+
+Life n' Crime is mostly being developed and managed by 1 person, so oversight is VERY VERY possible, do not hesitate to contact me either through github or my email found on my profile.
