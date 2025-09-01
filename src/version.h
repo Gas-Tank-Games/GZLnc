@@ -41,11 +41,11 @@ const char *GetVersionString();
 
 /** Lots of different version numbers **/
 
-#define VERSIONSTR "4.15pre"
+#define VERSIONSTR "0.1.0"
 
 // The version as seen in the Windows resource
-#define RC_FILEVERSION 4,14,9999,0
-#define RC_PRODUCTVERSION 4,14,9999,0
+#define RC_FILEVERSION 0,1,0,0
+#define RC_PRODUCTVERSION 0,1,0,0
 #define RC_PRODUCTVERSION2 VERSIONSTR
 // These are for content versioning.
 #define VER_MAJOR 4
@@ -76,7 +76,7 @@ const char *GetVersionString();
 // SAVESIG should match SAVEVER.
 
 // extension for savegames
-#define SAVEGAME_EXT "zds"
+#define SAVEGAME_EXT "lsf"
 
 // MINSAVEVER is the minimum level snapshot version that can be loaded.
 #define MINSAVEVER 4556
@@ -86,7 +86,7 @@ const char *GetVersionString();
 #define SAVEVER 4560
 
 // This is so that derivates can use the same savegame versions without worrying about engine compatibility
-#define GAMESIG "GZDOOM"
+#define GAMESIG "LNC"
 #define BASEWAD "gzdoom.pk3"
 // Set OPTIONALWAD to "" (null) to disable searching for it
 #define OPTIONALWAD "game_support.pk3"
@@ -94,12 +94,12 @@ const char *GetVersionString();
 #define VR3D_ENABLED
 
 // More stuff that needs to be different for derivatives.
-#define GAMENAME "GZDoom"
-#define WGAMENAME L"GZDoom"
-#define GAMENAMELOWERCASE "gzdoom"
-#define QUERYIWADDEFAULT true
-#define FORUM_URL "http://forum.zdoom.org/"
-#define BUGS_FORUM_URL	"http://forum.zdoom.org/viewforum.php?f=2"
+#define GAMENAME "Life n' Crime"
+#define WGAMENAME L"Life n' Crime"
+#define GAMENAMELOWERCASE "lnc"
+#define QUERYIWADDEFAULT false
+#define FORUM_URL "" // will add
+#define BUGS_FORUM_URL	"" // will add
 // For QUERYIWADDEFAULT: Set to 'true' to always show dialog box on startup by default, 'false' to disable.
 // Should set to 'false' for standalone games, and set to 'true' for regular source port forks that are meant to run any game.
 
@@ -111,7 +111,7 @@ const char *GetVersionString();
 #define GAME_DIR ".config/" GAMENAMELOWERCASE
 #endif
 
-#define DEFAULT_DISCORD_APP_ID "951303644597325885"
+#define DEFAULT_DISCORD_APP_ID "1366062544854188085"
 
 const int SAVEPICWIDTH = 216;
 const int SAVEPICHEIGHT = 162;
