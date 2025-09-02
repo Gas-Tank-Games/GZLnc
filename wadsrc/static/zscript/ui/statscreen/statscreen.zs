@@ -1,39 +1,3 @@
-/*
-** statscreen.zs
-**
-**---------------------------------------------------------------------------
-**
-** Copyright 2010-2017 Christoph Oelckers
-** Copyright 2017-2025 GZDoom Maintainers and Contributors
-** All rights reserved.
-**
-** Redistribution and use in source and binary forms, with or without
-** modification, are permitted provided that the following conditions
-** are met:
-**
-** 1. Redistributions of source code must retain the above copyright
-**    notice, this list of conditions and the following disclaimer.
-** 2. Redistributions in binary form must reproduce the above copyright
-**    notice, this list of conditions and the following disclaimer in the
-**    documentation and/or other materials provided with the distribution.
-** 3. The name of the author may not be used to endorse or promote products
-**    derived from this software without specific prior written permission.
-**
-** THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
-** IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-** OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-** IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
-** INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-** NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-** THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-**
-**---------------------------------------------------------------------------
-**
-*/
-
 // Note that the status screen needs to run in 'play' scope!
 
 class InterBackground native ui version("2.5")
@@ -75,6 +39,7 @@ struct PatchInfo ui version("2.5")
 	}
 };
 
+
 class StatusScreen : ScreenJob abstract version("2.5")
 {
 	enum EValues
@@ -115,7 +80,7 @@ class StatusScreen : ScreenJob abstract version("2.5")
 
 	InterBackground bg;
 	int				acceleratestage;	// used to accelerate or skip a stage
-	bool				playerready[MAXPLAYERS]; // This is no longer used since the server needs to track this
+	bool				playerready[MAXPLAYERS];
 	int				me;					// wbs.pnum
 	int				bcnt;
 	int				CurState;				// specifies current CurState
@@ -164,11 +129,12 @@ class StatusScreen : ScreenJob abstract version("2.5")
 
 	int 			player_deaths[MAXPLAYERS];
 	int  			sp_state;
-
+	
 	int cWidth, cHeight;	// size of the canvas
 	int scalemode;
 	int wrapwidth;	// size used to word wrap level names
 	int scaleFactorX, scaleFactorY;
+
 
 	//====================================================================
 	//
@@ -199,7 +165,7 @@ class StatusScreen : ScreenJob abstract version("2.5")
 		else screen.DrawChar(fnt, translation, x, y, charcode, DTA_FullscreenScale, scalemode, DTA_VirtualWidth, cwidth, DTA_VirtualHeight, cheight);
 		return x - width;
 	}
-
+	
 	//====================================================================
 	//
 	//
@@ -235,7 +201,7 @@ class StatusScreen : ScreenJob abstract version("2.5")
 
 	int DrawName(int y, TextureID tex, String levelname)
 	{
-		// draw <LevelName>
+		// draw <LevelName> 
 		if (tex.isValid())
 		{
 			let size = TexMan.GetScaledSize(tex);
@@ -270,16 +236,16 @@ class StatusScreen : ScreenJob abstract version("2.5")
 	// Draws a level author's name with the given font
 	//
 	//====================================================================
-
+	
 	int DrawAuthor(int y, String levelname)
 	{
 		if (levelname.Length() > 0)
 		{
 			int h = 0;
 			int lumph = author.mFont.GetHeight() * scaleFactorY;
-
+			
 			BrokenLines lines = author.mFont.BreakLines(levelname, wrapwidth / scaleFactorX);
-
+			
 			int count = lines.Count();
 			for (int i = 0; i < count; i++)
 			{
@@ -290,7 +256,7 @@ class StatusScreen : ScreenJob abstract version("2.5")
 		}
 		return y;
 	}
-
+	
 	//====================================================================
 	//
 	// Only kept so that mods that were accessing it continue to compile
@@ -311,12 +277,12 @@ class StatusScreen : ScreenJob abstract version("2.5")
 	// Draws a text, either as patch or as string from the string table
 	//
 	//====================================================================
-
+	
 	int DrawPatchOrText(int y, PatchInfo pinfo, TextureID patch, String stringname)
 	{
 		String string = Stringtable.Localize(stringname);
 		int midx = cwidth / 2;
-
+		
 		if (TexMan.OkForLocalization(patch, stringname))
 		{
 			let size = TexMan.GetScaledSize(patch);
@@ -329,7 +295,7 @@ class StatusScreen : ScreenJob abstract version("2.5")
 			return y + pinfo.mFont.GetHeight() * scaleFactorY;
 		}
 	}
-
+	
 	//====================================================================
 	//
 	// Draws "<Levelname> Finished!"
@@ -344,7 +310,7 @@ class StatusScreen : ScreenJob abstract version("2.5")
 		bool ispatch = wbs.LName0.isValid();
 		int oldy = TITLEY * scaleFactorY;
 		int h;
-
+		
 		if (!ispatch)
 		{
 			let asc = mapname.mFont.GetMaxAscender(lnametexts[1]);
@@ -353,11 +319,11 @@ class StatusScreen : ScreenJob abstract version("2.5")
 				oldy = (asc+2) * scaleFactorY;
 			}
 		}
-
+		
 		int y = DrawName(oldy, wbs.LName0, lnametexts[0]);
 
 		// If the displayed info is made of patches we need some additional offsetting here.
-		if (ispatch)
+		if (ispatch) 
 		{
 			int disp = 0;
 			// The offset getting applied here must at least be as tall as the largest ascender in the following text to avoid overlaps.
@@ -366,7 +332,7 @@ class StatusScreen : ScreenJob abstract version("2.5")
 				int h1 = BigFont.GetHeight() - BigFont.GetDisplacement();
 				int h2 = (y - oldy) / scaleFactorY / 4;
 				disp = min(h1, h2);
-
+				
 				if (!TexMan.OkForLocalization(finishedPatch, "$WI_FINISHED"))
 				{
 					disp += finishedp.mFont.GetMaxAscender("$WI_FINISHED");
@@ -378,9 +344,9 @@ class StatusScreen : ScreenJob abstract version("2.5")
 			}
 			y += disp * scaleFactorY;
 		}
-
+		
 		y = DrawAuthor(y, authortexts[0]);
-
+		
 		// draw "Finished!"
 
 		int statsy = multiplayer? NG_STATSY : SP_STATSY * scaleFactorY;
@@ -416,9 +382,9 @@ class StatusScreen : ScreenJob abstract version("2.5")
 		}
 
 		int y = DrawPatchOrText(oldy, entering, enteringPatch, "$WI_ENTERING");
-
+		
 		// If the displayed info is made of patches we need some additional offsetting here.
-
+		
 		if (ispatch)
 		{
 			int h1 = BigFont.GetHeight() - BigFont.GetDisplacement();
@@ -435,12 +401,12 @@ class StatusScreen : ScreenJob abstract version("2.5")
 
 		y = DrawName(y, wbs.LName1, lnametexts[1]);
 
-		if (wbs.LName1.isValid() && authortexts[1].length() > 0)
+		if (wbs.LName1.isValid() && authortexts[1].length() > 0) 
 		{
 			// Consdider the ascender height of the following text.
 			y += author.mFont.GetMaxAscender(authortexts[1]) * scaleFactorY;
 		}
-
+			
 		DrawAuthor(y, authortexts[1]);
 
 	}
@@ -475,7 +441,7 @@ class StatusScreen : ScreenJob abstract version("2.5")
 			}
 			len = text.Length();
 		}
-
+		
 		for(int text_p = len-1; text_p >= 0; text_p--)
 		{
 			// Digits are centered in a box the width of the '3' character.
@@ -538,6 +504,7 @@ class StatusScreen : ScreenJob abstract version("2.5")
 			drawNum (fnt, x, y, p, -1, false, color, nomove);
 		}
 	}
+
 
 	//====================================================================
 	//
@@ -726,7 +693,7 @@ class StatusScreen : ScreenJob abstract version("2.5")
 
 	protected virtual void initShowNextLoc ()
 	{
-		if (wbs.next == "")
+		if (wbs.next == "") 
 		{
 			// Last map in episode - there is no next location!
 			jobstate = finished;
@@ -764,7 +731,7 @@ class StatusScreen : ScreenJob abstract version("2.5")
 		bg.drawBackground(CurState, true, snl_pointeron);
 
 		// draws which level you are entering..
-		drawEL ();
+		drawEL ();  
 
 	}
 
@@ -779,7 +746,7 @@ class StatusScreen : ScreenJob abstract version("2.5")
 		snl_pointeron = true;
 		drawShowNextLoc();
 	}
-
+	
 	//====================================================================
 	//
 	//
@@ -790,7 +757,7 @@ class StatusScreen : ScreenJob abstract version("2.5")
 	{
 		int i;
 		int frags = 0;
-
+	
 		for (i = 0; i < MAXPLAYERS; i++)
 		{
 			if (playeringame[i]
@@ -799,7 +766,7 @@ class StatusScreen : ScreenJob abstract version("2.5")
 				frags += Plrs[playernum].frags[i];
 			}
 		}
-
+		
 		// JDC hack - negative frags.
 		frags -= Plrs[playernum].frags[playernum];
 
@@ -814,15 +781,10 @@ class StatusScreen : ScreenJob abstract version("2.5")
 
 	static void PlaySound(Sound snd)
 	{
-		S_StartSound(
-			snd,
-			CHAN_VOICE,
-			CHANF_MAYBE_LOCAL|CHANF_UI|(CVar.GetCVar('haptics_do_menus').GetBool()? CHANF_RUMBLE: CHANF_NORUMBLE),
-			1,
-			ATTN_NONE
-		);
+		S_StartSound(snd, CHAN_VOICE, CHANF_MAYBE_LOCAL|CHANF_UI, 1, ATTN_NONE);
 	}
-
+	
+	
 	// ====================================================================
 	//
 	// Purpose: See if the player has hit either the attack or use key
@@ -852,7 +814,7 @@ class StatusScreen : ScreenJob abstract version("2.5")
 	deprecated("4.8") void checkForAccelerate()
 	{
 	}
-
+	
 	// ====================================================================
 	// Ticker
 	// Purpose: Do various updates every gametic, for stats, animation,
@@ -861,7 +823,7 @@ class StatusScreen : ScreenJob abstract version("2.5")
 	// Returns: void
 	//
 	// ====================================================================
-
+	
 	virtual void StartMusic()
 	{
 		if (!bg.IsUsingMusic())
@@ -877,25 +839,25 @@ class StatusScreen : ScreenJob abstract version("2.5")
 	protected virtual void Ticker()
 	{
 		// counter for general background animation
-		bcnt++;
-
+		bcnt++;  
+	
 		if (bcnt == 1)
 		{
 			StartMusic();
 		}
-
+	
 		bg.updateAnimatedBack();
-
+	
 		switch (CurState)
 		{
 		case StatCount:
 			updateStats();
 			break;
-
+		
 		case ShowNextLoc:
 			updateShowNextLoc();
 			break;
-
+		
 		case NoState:
 			updateNoState();
 			break;
@@ -904,7 +866,7 @@ class StatusScreen : ScreenJob abstract version("2.5")
 			break;
 		}
 	}
-
+	
 	override void OnTick()
 	{
 		Ticker();
@@ -926,12 +888,12 @@ class StatusScreen : ScreenJob abstract version("2.5")
 			bg.drawBackground(CurState, false, false);
 			drawStats();
 			break;
-
+	
 		case ShowNextLoc:
 		case LeavingIntermission:	// this must still draw the screen once more for the wipe code to pick up.
 			drawShowNextLoc();
 			break;
-
+	
 		default:
 			drawNoState();
 			break;
@@ -968,7 +930,7 @@ class StatusScreen : ScreenJob abstract version("2.5")
 			wbs.partime = 0;
 			wbs.sucktime = 0;
 		}
-
+		
 		entering.Init(gameinfo.mStatscreenEnteringFont);
 		finishedp.Init(gameinfo.mStatscreenFinishedFont);
 		mapname.Init(gameinfo.mStatscreenMapNameFont);
@@ -985,7 +947,7 @@ class StatusScreen : ScreenJob abstract version("2.5")
 		enteringPatch = TexMan.CheckForTexture("WIENTER", TexMan.Type_MiscPatch);	// "entering"
 		finishedPatch = TexMan.CheckForTexture("WIF", TexMan.Type_MiscPatch);			// "finished"
 
-		lnametexts[0] = StringTable.Localize(wbstartstruct.thisname);
+		lnametexts[0] = StringTable.Localize(wbstartstruct.thisname);		
 		lnametexts[1] = StringTable.Localize(wbstartstruct.nextname);
 		authortexts[0] = StringTable.Localize(wbstartstruct.thisauthor);
 		authortexts[1] = StringTable.Localize(wbstartstruct.nextauthor);
@@ -993,52 +955,19 @@ class StatusScreen : ScreenJob abstract version("2.5")
 		bg = InterBackground.Create(wbs);
 		noautostartmap = bg.LoadBackground(false);
 		initStats();
-
+		
 		wrapwidth = cwidth = screen.GetWidth();
 		cheight = screen.GetHeight();
 		scalemode = -1;
 		scaleFactorX = CleanXfac;
 		scaleFactorY = CleanYfac;
 	}
-
+	
 	protected virtual void initStats() {}
 	protected virtual void updateStats() {}
 	protected virtual void drawStats() {}
 
-	static int, int, int GetPlayerWidths()
-	{
-		int maxNameWidth;
-		int maxScoreWidth;
-		int maxIconHeight;
-
-		StatusBar.Scoreboard_GetPlayerWidths(maxNameWidth, maxScoreWidth, maxIconHeight);
-
-		return maxNameWidth, maxScoreWidth, maxIconHeight;
-	}
-
-	static Color GetRowColor(PlayerInfo player, bool highlight)
-	{
-		return StatusBar.Scoreboard_GetRowColor(player, highlight);
-	}
-
-	static void GetSortedPlayers(in out Array<int> sorted, bool teamplay)
-	{
-		sorted.clear();
-		for(int i = 0; i < MAXPLAYERS; i++)
-		{
-			if(playeringame[i])
-			{
-				sorted.Push(i);
-			}
-		}
-
-		if(teamplay)
-		{
-			StatusBar.Scoreboard_SortPlayers(sorted, BaseStatusBar.Scoreboard_CompareByTeams);
-		}
-		else
-		{
-			StatusBar.Scoreboard_SortPlayers(sorted, BaseStatusBar.Scoreboard_CompareByPoints);
-		}
-	}
+	native static int, int, int GetPlayerWidths();
+	native static Color GetRowColor(PlayerInfo player, bool highlight);
+	native static void GetSortedPlayers(in out Array<int> sorted, bool teamplay);
 }

@@ -1,3 +1,5 @@
+THE FOLLOWING FILE APPLIES TO THE ORIGINAL b@ckdrop.png CREATED FOR STOCK GZDOOM AND NOT FOR LNC, AS LNC USES ITS OWN CUSTOM b@ckdrop.png
+
 b@ckdrop.png - Created for GZDoom by Nigel "Enjay" Rowand
 Creation year: 2020
 Licensed as CC-BY 3.0 (the mentioned file above, only)

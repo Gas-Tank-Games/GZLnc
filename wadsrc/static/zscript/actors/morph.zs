@@ -174,7 +174,9 @@ extend class Actor
 			return false;
 		}
 
-		// [MC] PreMorph is now called via MorphInto instead of here now.
+		// [MC] Notify that we're just about to start the transfer.
+		PreMorph(morphed, false);		// False: No longer the current.
+		morphed.PreMorph(self, true);	// True: Becoming this actor.
 
 		if ((style & MRF_TRANSFERTRANSLATION) && !morphed.bDontTranslate)
 			morphed.Translation = Translation;
@@ -290,7 +292,8 @@ extend class Actor
 		if (!MorphInto(alt))
 			return false;
 
-		//[MC] PreUnmorph is called by MorphInto now instead of here.
+		PreUnmorph(alt, false);
+		alt.PreUnmorph(self, true);
 
 		// Check to see if it had a powerup that caused it to morph.
 		for (Inventory item = alt.Inv; item;)

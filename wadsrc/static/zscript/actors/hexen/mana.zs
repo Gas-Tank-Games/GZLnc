@@ -57,7 +57,6 @@ class Mana3 : CustomInventory
 		Radius 8;
 		Height 8;
 		+FLOATBOB
-		+WEAPONSPAWN
 		Inventory.PickupMessage "$TXT_MANA_BOTH";
 	}
 	States
@@ -80,7 +79,6 @@ class ArtiBoostMana : CustomInventory
 	{
 		+FLOATBOB
 		+COUNTITEM
-		+WEAPONSPAWN
 		+INVENTORY.INVBAR
 		+INVENTORY.FANCYPICKUPSOUND
 		Inventory.PickupFlash "PickupFlash";

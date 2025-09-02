@@ -7,7 +7,6 @@ class ArtiDarkServant : Inventory
 	{
 		+COUNTITEM
 		+FLOATBOB
-		+WEAPONSPAWN
 		Inventory.RespawnTics 4230;
 		Inventory.DefMaxAmount;
 		Inventory.PickupFlash "PickupFlash";

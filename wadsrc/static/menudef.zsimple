@@ -4,66 +4,50 @@
 
 OptionMenu "OptionsMenuSimple" protected
 {
-	Title "$OPTMNU_TITLE"
-	Submenu "$OPTMNU_CONTROLS",			"CustomizeControls"
-	Submenu "$OPTMNU_MOUSE",			"MouseOptionsSimple"
-	Submenu "$OPTMNU_JOYSTICK",			"JoystickOptions"
+    AnimatedTransition
+	StaticText "Warning!!!!"
+	StaticText "This LnC demo does not have proper controller support!"
+	StaticText "We will release controller support with the release of the full game."
 	StaticText " "
-	Submenu "$OPTMNU_PLAYER",			"NewPlayerMenu"
+	Submenu "$OPTMNU_CONTROLS",			"CustomizeControls"
 	StaticText " "
 	Submenu "$OPTMNU_SOUND",			"SoundOptionsSimple"
 	Submenu "$OPTMNU_DISPLAY",			"VideoOptionsSimple"
-	Submenu "$HUDMNU_SCALEOPT",			"ScalingOptionsSimple"
-	StaticText " "
-	Submenu "$OPTMNU_MISCELLANEOUS",	"MiscOptionsSimple"	
-	StaticText " "
-	Submenu "$OS_TITLE", "os_Menu"
-	StaticText " "
-	Submenu "$OPTMNU_FULLOPTIONS", "OptionsMenuFull"
-	StaticText " "
-	SafeCommand	"$OPTMNU_DEFAULTS",		"reset2defaults"
-	SafeCommand	"$OPTMNU_RESETTOSAVED",	"reset2saved"
-	SafeCommand	"$OPTMNU_WRITEINI",		"writeini"
-	Command "$OPTMNU_CONSOLE",			"menuconsole"
-	StaticText " "
+	Submenu "Map Settings",			    "AutomapOptions"
 }
 
 OptionMenu SoundOptionsSimple protected
 {
-	Title "$SNDMNU_TITLE"
+    AnimatedTransition
+	StaticText ""
 	Slider "$MODMNU_MASTERVOLUME",		"snd_mastervolume", 0, 1, 0.05, 2
 	StaticText " "
 	Slider "$SNDMNU_SFXVOLUME",			"snd_sfxvolume", 0, 1, 0.05, 2
 	Slider "$SNDMNU_MUSICVOLUME",		"snd_musicvolume", 0, 1, 0.05, 2
-	Slider "$SNDMNU_FOOTSTEPVOLUME",	"snd_footstepvolume", 0, 1, 0.05, 2
 	StaticText " "
 	Slider "$SNDMNU_MENUVOLUME",		"snd_menuvolume", 0, 1, 0.05, 2
 	StaticText " "
-	Option "$SNDMNU_MIDIDEVICE",		"snd_mididevice", "MidiDevices"
+	//Option "$SNDMNU_MIDIDEVICE",		"snd_mididevice", "MidiDevices"
 	Command "$SNDMNU_RESTART",			"snd_reset"
 }
 
 OptionMenu VideoOptionsSimple protected
 {
-	Title "$DSPLYMNU_TITLE"
-
+    AnimatedTransition
+	StaticText ""
+	Option "Resolution",			    "vid_scalemode", "ScaleModes"
+	Option "Aspect Ratio",		        "vid_aspect", "ForceRatios"
+	Slider "UI Scale",		            "vid_scalefactor", 0.25, 2.0, 0.25, 2
+	StaticText ""
 	Option "$VIDMNU_PREFERBACKEND",		"vid_preferbackend", "PreferBackend"
-	IfOption(SWRender)
-	{
-		Option "$VIDMNU_RENDERMODE",		"vid_rendermode", "RenderMode"
-	}
 	Option "$VIDMNU_FULLSCREEN",		"vid_fullscreen", "YesNo"
 	IfOption(Mac)
 	{
 		Option "$VIDMNU_HIDPI",			"vid_hidpi", "YesNo"
 	}
-
 	StaticText " "
-	Option "$DSPLYMNU_DRAWFUZZ",				"r_drawfuzz", "Fuzziness"
-	Option "$DSPLYMNU_WIPETYPE",				"wipetype", "Wipes"
-	StaticText " "
-	Option "$GLTEXMNU_TEXFILTER",		gl_texture_filter,				"FilterModes"
-	Option "$GLTEXMNU_ANISOTROPIC",		gl_texture_filter_anisotropic,	"Anisotropy"
+	Option "$GLTEXMNU_TEXFILTER",		        gl_texture_filter,				"FilterModes"
+	Option "$GLTEXMNU_ANISOTROPIC",		        gl_texture_filter_anisotropic,	"Anisotropy"
 	Option "$GLPREFMNU_SECLIGHTMODE",			gl_lightmode,					"LightingModes"
 	StaticText " "
 	Option "$DSPLYMNU_VSYNC",					"vid_vsync", "OnOff"
@@ -75,15 +59,19 @@ OptionMenu VideoOptionsSimple protected
 	Slider "$DSPLYMNU_SATURATION",				"vid_saturation",  				-3.0, 3.0, 0.25, 2
 	StaticText " "
 	Slider "$DSPLYMNU_FOV",						"fov",							75.0, 120.0, 0.1, 1
-	// commenting this out for now, this menu is so general purpose I am not sure it makes sense, but I'm leaving it here just in case
-	// the "full" menu doesn't have some of the options that are in this one.
-	//StaticText " "
-	//Submenu "$OPTMNU_FULLOPTIONS", "VideoModeMenu"
+	StaticText " "
+	Option "Subtitles",					        "lnc_subtitles", "OnOff"
+	StaticText " "
+	StaticText "Warning: DON'T ENABLE REFLECTIONS IF YOUR PC IS ASS!!!!"
+	StaticText " "
+	Option "Mirrors",					        "gl_mirrors", "OnOff"
+	Option "Reflections",					    "gl_plane_reflection", "OnOff"
+	StaticText " "
+	Option "FPS Counter",                       "vid_fps", "OnOff"
 }
 
 OptionMenu ScalingOptionsSimple protected
 {
-	Title "$SCALEMNU_TITLE"
 	StaticText "$OPTMNU_HUD"
 	ScaleSlider "$HUDMNU_UISCALE",				"uiscale", 0.0, 8.0, 1.0, "$SCALEMNU_ADAPT"
 	Option "$SCALEMNU_HUDASPECT", 				"hud_aspectscale", "OnOff"
@@ -96,7 +84,6 @@ OptionMenu ScalingOptionsSimple protected
 
 OptionMenu MiscOptionsSimple protected
 {
-	Title "$MISCMNU_TITLE"
 	Option "$MISCMNU_QUERYIWAD",				"queryiwad", "OnOff"
 	Option "$MISCMNU_NOCHEATS",					"nocheats", "OnOff"
 	Option "$MISCMNU_ALLCHEATS",				"allcheats", "OnOff"
@@ -105,13 +92,11 @@ OptionMenu MiscOptionsSimple protected
 	Option "$MISCMNU_ENABLESCRIPTSCREENSHOTS",	"enablescriptscreenshot", "OnOff"
 	Option "$OPTMNU_LANGUAGE",					"language", "LanguageOptions"
 	Option "$MSGMNU_LONGSAVEMESSAGES",			"longsavemessages",	"OnOff"
-	StaticText " "
-	Option "$MISCMNU_DISCORDRPC",				"i_discordrpc",	"OnOff"
 }
 
 OptionMenu "MouseOptionsSimple" protected
 {
-	Title "$MOUSEMNU_TITLE"
+    AnimatedTransition
 	Option "$MOUSEMNU_ENABLEMOUSE",		"use_mouse", "YesNo"
 	Option "$MOUSEMNU_MOUSEINMENU",		"m_use_mouse", "MenuMouse", "use_mouse"
 	IfOption(Windows)

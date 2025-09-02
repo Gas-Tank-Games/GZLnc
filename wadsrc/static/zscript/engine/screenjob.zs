@@ -321,22 +321,6 @@ class ScreenJobRunner : Object UI
 		State_Run,
 		State_Fadeout,
 	}
-	enum ESkipType
-	{
-		ST_VOTE,
-		ST_MUST_BE_SKIPPABLE,
-		ST_UNSKIPPABLE,
-	}
-	enum EInputType
-	{
-		INP_KEYBOARD_MOUSE,
-		INP_CONTROLLER,
-		INP_JOYSTICK,
-	}
-
-	private ESkipType skipType;
-	private EInputType lastInput;
-
 	Array<ScreenJob> jobs;
 	//CompletionFunc completion;
 	int index;
@@ -351,49 +335,13 @@ class ScreenJobRunner : Object UI
 	
 	native static void setTransition(int type);
 
-	ESkipType GetSkipType() const
-	{
-		return skipType;
-	}
-
-	EInputType GetLastInputType() const
-	{
-		return lastInput;
-	}
-
-	protected void SetLastInputType(InputEvent ev)
-	{
-		if (ev.Type == InputEvent.Type_Mouse)
-		{
-			lastInput = INP_KEYBOARD_MOUSE;
-		}
-		else if (ev.Type == InputEvent.Type_KeyDown)
-		{
-			if (ev.KeyScan >= InputEvent.Key_Pad_LThumb_Right && ev.KeyScan <= InputEvent.Key_Pad_Y)
-			{
-				lastInput = INP_CONTROLLER;
-			}
-			else if ((ev.KeyScan >= InputEvent.Key_Joy1 && ev.KeyScan <= InputEvent.Key_JoyPOV4_Up)
-					|| (ev.KeyScan >= InputEvent.Key_JoyAxis1Plus && ev.KeyScan <= InputEvent.Key_JoyAxis8Minus))
-			{
-				lastInput = INP_JOYSTICK;
-			}
-			else
-			{
-				lastInput = INP_KEYBOARD_MOUSE;
-			}
-		}
-	}
-
-	void Init(bool clearbefore_, bool skipall_, ESkipType type = ST_VOTE)
+	void Init(bool clearbefore_, bool skipall_)
 	{
 		clearbefore = clearbefore_;
 		skipall = skipall_;
 		index = -1;
 		fadeticks = 0;
 		last_paused_tic = -1;
-		skipType = type;
-		ResetReadyTimer();
 	}
 
 	override void OnDestroy()
@@ -470,7 +418,6 @@ class ScreenJobRunner : Object UI
 	{
 		if (jobs.Size() == 0) 
 		{
-			DrawReadiedPlayers(smoothratio);
 			return 1;
 		}
 		int x = index >= jobs.Size()? jobs.Size()-1 : index;
@@ -486,7 +433,6 @@ class ScreenJobRunner : Object UI
 		}
 		int state = job.DrawFrame(smoothratio);
 		Screen.SetScreenFade(1.);
-		DrawReadiedPlayers(smoothratio);
 		return state;
 	}
 
@@ -516,9 +462,6 @@ class ScreenJobRunner : Object UI
 
 	virtual bool OnEvent(InputEvent ev)
 	{
-		SetLastInputType(ev);
-
-		if (ConsumedInput(ev)) return true;
 		if (paused || index < 0 || index >= jobs.Size()) return false;
 		if (jobs[index].jobstate != ScreenJob.running) return false;
 		return jobs[index].OnEvent(ev);

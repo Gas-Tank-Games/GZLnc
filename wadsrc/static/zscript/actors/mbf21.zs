@@ -500,7 +500,7 @@ extend class Weapon
 		if (!weapon) return;
 
 		if (!dontchangeplayer) player.mo.PlayAttacking2();
-		player.SetPsprite(PSP_FLASH, tstate, true);
+		player.SetPsprite(PSP_FLASH, tstate);
 	}
 
 	// needed to call A_SeekerMissile with proper defaults.

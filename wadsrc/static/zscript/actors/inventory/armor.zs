@@ -62,12 +62,8 @@ class BasicArmor : Armor
 	int MaxAbsorb;
 	int MaxFullAbsorb;
 	int BonusCount;
-	int MaxAllowedAmount;
 	Name ArmorType;
 	int ActualSaveAmount;
-	private uint ArmorFlags;
-
-	flagdef AltSemantics: ArmorFlags, 0; // Zandronum behaviour.
 	
 	Default
 	{
@@ -118,8 +114,6 @@ class BasicArmor : Armor
 		copy.BonusCount = BonusCount;
 		copy.ArmorType = ArmorType;
 		copy.ActualSaveAmount = ActualSaveAmount;
-		copy.bAltSemantics = bAltSemantics;
-		copy.MaxAllowedAmount = MaxAllowedAmount;
 		GoAwayAndDie ();
 		return copy;
 	}
@@ -303,15 +297,9 @@ class BasicArmorBonus : Armor
 			return BonusCount > 0 ? result : true;
 		}
 
-		let maximumAllowedAmount = MaxSaveAmount + armor.BonusCount;
-		if (armor.MaxAllowedAmount)
-		{
-			maximumAllowedAmount = armor.MaxAllowedAmount;
-		}
-
 		// If you already have more armor than this item can give you, you can't
 		// use it.
-		if (armor.Amount >= maximumAllowedAmount)
+		if (armor.Amount >= MaxSaveAmount + armor.BonusCount)
 		{
 			return result;
 		}
@@ -327,7 +315,7 @@ class BasicArmorBonus : Armor
 			armor.ActualSaveAmount = MaxSaveAmount;
 		}
 
-		armor.Amount = min(armor.Amount + saveAmount, maximumAllowedAmount);
+		armor.Amount = min(armor.Amount + saveAmount, MaxSaveAmount + armor.BonusCount);
 		armor.MaxAmount = max(armor.MaxAmount, MaxSaveAmount);
 		return true;
 	}
@@ -404,8 +392,6 @@ class BasicArmorPickup : Armor
 	{
 		int SaveAmount = GetSaveAmount();
 		let armor = BasicArmor(Owner.FindInventory("BasicArmor", true));
-		let lBonusCount = (armor == null) ? 0 : armor.BonusCount;
-		let lMaxAmount = SaveAmount + (armor == null ? 0 : lBonusCount);
 
 		// This should really never happen but let's be prepared for a broken inventory.
 		if (armor == null)
@@ -416,19 +402,9 @@ class BasicArmorPickup : Armor
 		}
 		else
 		{
-			if (armor.MaxAllowedAmount)
-			{
-				lMaxAmount = armor.MaxAllowedAmount;
-			}
 			// If you already have more armor than this item gives you, you can't
 			// use it.
-			if (armor.bAltSemantics ? (armor.Amount > lMaxAmount) : (armor.Amount >= lMaxAmount))
-			{
-				return false;
-			}
-			// If we have the same amount of the armor we're trying to use, but our armor offers
-			// better protection, don't pick it up.
-			if (armor.bAltSemantics && armor.Amount == lMaxAmount && armor.SavePercent >= (clamp(SavePercent, 0, 100) / 100))
+			if (armor.Amount >= SaveAmount + armor.BonusCount)
 			{
 				return false;
 			}
@@ -440,7 +416,7 @@ class BasicArmorPickup : Armor
 		}
 		
 		armor.SavePercent = clamp(SavePercent, 0, 100) / 100;
-		armor.Amount = armor.bAltSemantics ? (min(SaveAmount + armor.Amount, lMaxAmount)) : (SaveAmount + armor.BonusCount);
+		armor.Amount = SaveAmount + armor.BonusCount;
 		armor.MaxAmount = SaveAmount;
 		armor.Icon = Icon;
 		armor.MaxAbsorb = MaxAbsorb;

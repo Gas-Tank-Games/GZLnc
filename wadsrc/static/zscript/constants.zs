@@ -1,8 +1,6 @@
 // for flag changer functions.
 const FLAG_NO_CHANGE = -1;
-const MAXPLAYERS = 64;
-const TEAM_NONE = 255;
-const TEAM_MAXIMUM = 16;
+const MAXPLAYERS = 8;
 
 enum EStateUseFlags
 {
@@ -977,7 +975,6 @@ enum EDmgFlags
 	DMG_NO_PAIN = 1024,
 	DMG_EXPLOSION = 2048,
 	DMG_NO_ENHANCE = 4096,
-	DMG_RAILGUN = 8192,
 }
 
 enum EReplace
@@ -1011,11 +1008,6 @@ enum EMapThingFlags
 	MTF_SECRET			= 0x080000,	// Secret pickup
 	MTF_NOINFIGHTING	= 0x100000,
 	MTF_NOCOUNT			= 0x200000,	// Removes COUNTKILL/COUNTITEM
-
-	// Thing spawn origins, what created this thing?
-	MTF_MAPTHING		= 0x400000, // Map spawned
-	MTF_CONSOLETHING	= 0x800000, // Console spawned (i.e summon)
-	MTF_NONSPAWNTHING	= (MTF_MAPTHING|MTF_CONSOLETHING), // [inkoalawetrust]: Rachael didn't want a dedicated MTF_SPAWNTHING flag taking up the field, so check if the other 2 flags aren't true instead.
 };
 
 enum ESkillProperty
@@ -1150,12 +1142,6 @@ enum EGameAction
 	ga_screenshot,
 	ga_togglemap,
 	ga_fullconsole,
-	ga_resumeconversation,
-	ga_intro,
-	ga_intermission,
-	ga_titleloop,
-	ga_mapwarp,
-	ga_quicksave,
 };
 
 enum EPuffFlags
@@ -1427,7 +1413,6 @@ enum ELevelFlags
 	LEVEL3_LIGHTCREATED			= 0x00080000,	// a light had been created in the last frame
 	LEVEL3_NOFOGOFWAR			= 0x00100000,	// disables effect of r_radarclipper CVAR on this map
 	LEVEL3_SECRET				= 0x00200000,	// level is a secret level
-	LEVEL3_SKYMIST				= 0x00400000,   // level skyfog uses the skymist texture
 };
 
 // [RH] Compatibility flags.
@@ -1557,17 +1542,3 @@ enum EParticleStyle
 	PT_ROUND	= 1,
 	PT_SMOOTH	= 2,
 };
-
-enum ESetBoneMode
-{
-	SB_CLEAR = 0,
-	SB_ADD = 1,
-	SB_REPLACE = 2,
-};
-
-enum EIQMFlags
-{
-	IQM_GET_BONE_INFO  =		1 << 2,
-	IQM_GET_BONE_INFO_RECALC  =	1 << 3, // RECALCULATE BONE INFO INSTANTLY WHEN STATE/ANIMATION CHANGES, MIGHT GET EXPENSIVE
-};
-

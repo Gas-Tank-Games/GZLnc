@@ -48,7 +48,6 @@ class Ammo : Inventory
 	Default
 	{
 		+INVENTORY.KEEPDEPLETED
-		+WEAPONSPAWN
 		Inventory.PickupSound "misc/ammo_pkup";
 		
 		Ammo.DropAmmoFactorMultiplier 1;
@@ -242,11 +241,6 @@ class Ammo : Inventory
 class BackpackItem : Inventory
 {
 	bool bDepleted;
-
-	Default
-	{
-		+WEAPONSPAWN
-	}
 	
 	//===========================================================================
 	//

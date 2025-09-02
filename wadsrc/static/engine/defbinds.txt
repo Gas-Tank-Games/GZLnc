@@ -1,10 +1,8 @@
-/* Default WASD keybindings for all games */
-
 w +forward
 s +back
 a +moveleft
 d +moveright
 space +jump
-x crouch
+c crouch
 e +use
 mouse2 +altattack

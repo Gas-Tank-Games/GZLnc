@@ -9,7 +9,6 @@ class HealthBonus : Health
 		Inventory.Amount 1;
 		Inventory.MaxAmount 200;
 		Inventory.PickupMessage "$GOTHTHBONUS";
-		Tag "$TAG_HEALTHBONUS";
 	}
 	States
 	{
@@ -54,7 +53,6 @@ class Stimpack : Health
 	{
 		Inventory.Amount 10;
 		Inventory.PickupMessage "$GOTSTIM";
-		Tag "$TAG_STIMPACK";
 	}
 	States
 	{
@@ -73,7 +71,6 @@ class Medikit : Health
 		Inventory.Amount 25;
 		Inventory.PickupMessage "$GOTMEDIKIT";
 		Health.LowMessage 25, "$GOTMEDINEED";
-		Tag "$TAG_MEDIKIT";
 	}
 	States
 	{

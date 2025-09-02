@@ -35,7 +35,7 @@
 class MessageBoxMenu : Menu
 {
 	BrokenLines mMessage;
-	readonly voidptr Handler;
+	voidptr Handler;
 	int mMessageMode;
 	int messageSelection;
 	int mMouseLeft, mMouseRight, mMouseY;
@@ -45,7 +45,7 @@ class MessageBoxMenu : Menu
 	int destWidth, destHeight;
 	String selector;
 
-	native void CallHandler();
+	native static void CallHandler(voidptr hnd);
 
 
 	//=============================================================================
@@ -95,6 +95,7 @@ class MessageBoxMenu : Menu
 		{
 			MenuSound ("menu/prompt");
 		}
+		Handler = native_handler;
 	}
 
 	//=============================================================================
@@ -163,7 +164,7 @@ class MessageBoxMenu : Menu
 		{
 			if (res) 
 			{
-				CallHandler();
+				CallHandler(Handler);
 			}
 			else
 			{

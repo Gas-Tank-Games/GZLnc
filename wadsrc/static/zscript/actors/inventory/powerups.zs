@@ -1104,7 +1104,6 @@ class PowerWeaponLevel2 : Powerup
 		if (weap.GetReadyState() != ready)
 		{
 			player.ReadyWeapon = sister;
-			player.ReadyWeapon.OnSelect(fromPowerup: true);
 			player.SetPsprite(PSP_WEAPON, ready);
 		}
 		else
@@ -1115,13 +1114,11 @@ class PowerWeaponLevel2 : Powerup
 				// If the weapon changes but the state does not, we have to manually change the PSprite's caller here.
 				psp.Caller = sister;
 				player.ReadyWeapon = sister;
-				player.ReadyWeapon.OnSelect(fromPowerup: true);
 			}
 			else
 			{
 				// Something went wrong. Initiate a regular weapon change.
 				player.PendingWeapon = sister;
-				player.PendingWeapon.OnSelect(fromPowerup: true);
 			}
 		}
 	}

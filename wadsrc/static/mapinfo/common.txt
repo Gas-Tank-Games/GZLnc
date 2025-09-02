@@ -5,7 +5,6 @@ Gameinfo
 	CheatKey = "maparrows/key.txt"
 	EasyKey = "maparrows/ravenkey.txt"
 	PrecacheSounds = "misc/secret", "misc/teleport", "misc/fallingsplat", "misc/ripslop"
-	BloodSplatDecalDistance = 172.0
 }
 
 DoomEdNums
@@ -18,7 +17,6 @@ DoomEdNums
     11 = "$DeathmatchStart"
     14 = TeleportDest
    118 = ZBridge
-   888 = MBFHelperDog
   1400 = "$SSeqOverride", 0
   1401 = "$SSeqOverride", 1
   1402 = "$SSeqOverride", 2
@@ -79,7 +77,6 @@ DoomEdNums
   9081 = SkyPicker
   9082 = SectorSilencer
   9083 = SkyCamCompat
-  9084 = OrthographicCamera
   9200 = Decal
   9300 = "$PolyAnchor"
   9301 = "$PolySpawn"
@@ -453,118 +450,7 @@ Intermission Inter_Cast
 
 Intermission Doom2Cast
 {
-	Cast
-	{
-		CastClass = "Zombieman"
-		CastName = "$CC_ZOMBIE"
-		AttackSound = "Missile", 1, "grunt/attack"
-	}
-	Cast
-	{
-		CastClass = "ShotgunGuy"
-		CastName = "$CC_SHOTGUN"
-		AttackSound = "Missile", 1, "shotguy/attack"
-	}
-	Cast
-	{
-		CastClass = "ChaingunGuy"
-		CastName = "$CC_HEAVY"
-		AttackSound = "Missile", 1, "chainguy/attack"
-		AttackSound = "Missile", 2, "chainguy/attack"
-		AttackSound = "Missile", 3, "chainguy/attack"
-	}
-	Cast
-	{
-		CastClass = "DoomImp"
-		CastName = "$CC_IMP"
-		AttackSound = "Missile", 2, "imp/attack"
-	}
-	Cast
-	{
-		CastClass = "Demon"
-		CastName = "$CC_DEMON"
-		AttackSound = "Melee", 1, "demon/melee"
-	}
-	Cast
-	{
-		CastClass = "LostSoul"
-		CastName = "$CC_LOST"
-		AttackSound = "Missile", 1, "skull/melee"
-	}
-	Cast
-	{
-		CastClass = "Cacodemon"
-		CastName = "$CC_CACO"
-		AttackSound = "Missile", 1, "caco/attack"
-	}
-	Cast
-	{
-		CastClass = "HellKnight"
-		CastName = "$CC_HELL"
-		AttackSound = "Missile", 1, "baron/attack"
-	}
-	Cast
-	{
-		CastClass = "BaronOfHell"
-		CastName = "$CC_BARON"
-		AttackSound = "Missile", 1, "baron/attack"
-	}
-	Cast
-	{
-		CastClass = "Arachnotron"
-		CastName = "$CC_ARACH"
-		AttackSound = "Missile", 1, "baby/attack"
-	}
-	Cast
-	{
-		CastClass = "PainElemental"
-		CastName = "$CC_PAIN"
-		AttackSound = "Missile", 2, "skull/melee"
-	}
-	Cast
-	{
-		CastClass = "Revenant"
-		CastName = "$CC_REVEN"
-		AttackSound = "Missile", 1, "skeleton/attack"
-		AttackSound = "Melee", 1, "skeleton/swing"
-		AttackSound = "Melee", 3, "skeleton/melee"
-	}
-	Cast
-	{
-		CastClass = "Fatso"
-		CastName = "$CC_MANCU"
-		AttackSound = "Missile", 1, "fatso/attack"
-		AttackSound = "Missile", 4, "fatso/attack"
-		AttackSound = "Missile", 7, "fatso/attack"
-	}
-	Cast
-	{
-		CastClass = "Archvile"
-		CastName = "$CC_ARCH"
-		AttackSound = "Missile", 1, "vile/start"
-	}
-	Cast
-	{
-		CastClass = "SpiderMastermind"
-		CastName = "$CC_SPIDER"
-		AttackSound = "Missile", 1, "spider/attack"
-		AttackSound = "Missile", 2, "spider/attack"
-	}
-	Cast
-	{
-		CastClass = "Cyberdemon"
-		CastName = "$CC_CYBER"
-		AttackSound = "Missile", 1, "weapons/rocklf"
-		AttackSound = "Missile", 3, "weapons/rocklf"
-		AttackSound = "Missile", 5, "weapons/rocklf"
-	}
-	Cast
-	{
-		CastClass = "DoomPlayer"
-		CastName = "$CC_HERO"
-		AttackSound = "Missile", 0, "weapons/sshotf"
-	}
-	Link = Doom2Cast	// restart cast call
+  // THE DOOM 2 CAST CAN GO SUCK MY FUCKING DICK!!!!
 }
 
 Intermission Inter_Chess

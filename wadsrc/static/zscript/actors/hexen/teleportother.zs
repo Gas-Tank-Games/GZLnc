@@ -7,7 +7,6 @@ class ArtiTeleportOther : Inventory
 	{
 		+COUNTITEM
 		+FLOATBOB
-		+WEAPONSPAWN
 		+INVENTORY.INVBAR
 		+INVENTORY.FANCYPICKUPSOUND
 		Inventory.PickupFlash "PickupFlash";

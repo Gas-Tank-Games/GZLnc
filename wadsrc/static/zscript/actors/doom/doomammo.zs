@@ -162,7 +162,6 @@ class Backpack : BackpackItem
 	{
 		Height 26;
 		Inventory.PickupMessage "$GOTBACKPACK";
-		Tag "$TAG_BACKPACK";
 	}
 	States
 	{
