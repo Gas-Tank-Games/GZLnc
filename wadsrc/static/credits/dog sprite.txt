@@ -1,3 +1,5 @@
+UNUSED IN LNC
+
 German Shepherd Dog Sprite
 
 Modeled from scratch and rendered in Blender by Nash Muhandes.

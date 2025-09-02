@@ -177,8 +177,6 @@ spawnnums
 	216 = Grenade
 }
 
-clearskills
-
 skill baby
 {
 	AutoUseHealth
