@@ -457,4 +457,4 @@ endif()
 
 # Boxer Library
 add_subdirectory( libraries/boxer )
-target_link_libraries( lnc PUBLIC boxer )
+#target_link_libraries( lnc PUBLIC boxer )
