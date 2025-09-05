@@ -123,6 +123,13 @@
 
 #include <gamejolt/gjAPI.h>
 
+#ifdef _WIN32
+#undef DrawText
+#undef DrawTextW
+#undef GetMessage
+#undef GetMessageW
+#endif
+
 #ifdef __unix__
 #include "i_system.h"  // for SHARE_DIR
 #endif // __unix__
