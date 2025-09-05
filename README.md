@@ -23,7 +23,7 @@ Special thanks to Coraline of the EDGE team for allowing us to use her [README.m
 
 It's the exact same procedure as GZDoom, follow the instructions on the [wiki](https://zdoom.org/wiki/) in the "Programmer's Corner" section and build for your platform!
 
-Specifically for LnC, you will need [curl](https://curl.se/download.html) installed on your system.
+Specifically for LnC, if you are building on MacOS, you will need [curl](https://curl.se/download.html) installed on your system.
 
 # GZDoom Resources
 - https://zdoom.org/ - Home Page
