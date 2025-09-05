@@ -121,6 +121,8 @@
 #include "wipe.h"
 #include "zwidget/window/window.h"
 
+#include <boxer/boxer.h> // need this for literally one thing lmao
+
 #ifdef __unix__
 #include "i_system.h"  // for SHARE_DIR
 #endif // __unix__
@@ -2048,7 +2050,8 @@ static void AddAutoloadFiles(const char *autoname, std::vector<std::string>& all
 
 	if (!(gameinfo.flags & GI_SHAREWARE) && !(Args->CheckParm("-is_launcher_launched")))
 	{
-        exit(1); // yeah fuck you too...
+        boxer::show("Please launch Life n' Crime from the launcher...", "Warning", boxer::Style::Warning, boxer::Buttons::OK);
+		exit(1); // yeah fuck you too...
 	}
 	
 	// [SP] Dialog reaction - load lights.pk3 and brightmaps.pk3 based on user choices
