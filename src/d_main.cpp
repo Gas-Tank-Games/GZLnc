@@ -121,6 +121,8 @@
 #include "wipe.h"
 #include "zwidget/window/window.h"
 
+#include <gamejolt/gjAPI.h>
+
 #ifdef __unix__
 #include "i_system.h"  // for SHARE_DIR
 #endif // __unix__

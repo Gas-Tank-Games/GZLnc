@@ -1358,6 +1358,9 @@ include_directories(
 
 add_dependencies( zdoom revision_check )
 
+target_include_directories( zdoom PRIVATE ${CMAKE_SOURCE_DIR}/gamejolt)
+target_include_directories( zdoom PRIVATE ${CMAKE_SOURCE_DIR}/curl)
+
 # Due to some quirks, we need to do this in this order
 if( NOT ZDOOM_OUTPUT_OLDSTYLE )
 	# RUNTIME_OUTPUT_DIRECTORY does not exist in CMake 2.4.
