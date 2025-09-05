@@ -1,9 +1,5 @@
 cmake_minimum_required( VERSION 3.16 )
 
-# Boxer Library
-add_subdirectory("libraries/boxer")
-target_link_libraries("lnc PUBLIC boxer")
-
 if( COMMAND cmake_policy )
 	if( POLICY CMP0011 )
 		cmake_policy( SET CMP0011 NEW )
@@ -458,3 +454,7 @@ endif()
 if( NOT CMAKE_CROSSCOMPILING )
 	export(TARGETS ${CROSS_EXPORTS} FILE "${CMAKE_BINARY_DIR}/ImportExecutables.cmake" )
 endif()
+
+# Boxer Library
+add_subdirectory( libraries/boxer )
+target_link_libraries( lnc PUBLIC boxer )
