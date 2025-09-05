@@ -32,7 +32,7 @@ ListMenu "LNCOptions"
 	TextItem "Sound", "s", "SoundOptionsSimple", 0
 	TextItem "Video", "v", "VideoOptionsSimple", 0
 	TextItem "Map", "m", "AutomapOptions", 0
-	TextItem "Multipla.", "u", "NewPlayerMenu", 0
+	TextItem "Other", "u", "LNCOtherMenu", 0
 }
 
 ListMenu "LNCExtras"
@@ -354,11 +354,17 @@ OptionValue "PlayerSkin"
 	}
 */
 
-OptionMenu "NewPlayerMenu" protected
+OptionMenu "LNCOtherMenu" protected
 {
 	AnimatedTransition
 	StaticText ""
+	StaticText "Multiplayer"
+	StaticText ""
 	PlayerNameField "$PLYRMNU_NAME"
+	StaticText ""
+	StaticText "Third Party Intergations"
+	StaticText ""
+	Option "$MISCMNU_DISCORDRPC",				"i_discordrpc",	"OnOff"
 	//PlayerTeamItem "$PLYRMNU_TEAM", "PlayerTeam"
 	//PlayerColorItem "$PLYRMNU_PLAYERCOLOR", "PlayerColors"
 	//PlayerColorSlider "$PLYRMNU_RED", 0
@@ -427,6 +433,7 @@ OptionMenu "CustomizeControls" protected
 	StaticText ""
 	Submenu "$OPTMNU_MOUSE",			"MouseOptionsSimple"
 	Submenu "$OPTMNU_JOYSTICK",			"JoystickOptions"
+	Submenu "$OPTMNU_HAPTICS",			"HapticsOptions"
 	StaticText ""
 	SafeCommand "$OPTMNU_DEFAULTS",		"resetb2defaults"
 }
@@ -644,6 +651,7 @@ OptionMenu "JoystickOptionsDefaults" protected
     AnimatedTransition
 	Option "Enable INCOMPLETE Controller Support", "use_joystick", "YesNo"
 	Option "$JOYMNU_NOMENU", "m_blockcontrollers", "YesNo"
+	ScaleSlider "$JOYMNU_HAPTICS", "haptics_strength", 0, 10, 1, "$OPTVAL_OFF", 0, "m_simpleoptions_view", 0, 1
 	IfOption(Windows)
 	{
 		Option "$JOYMNU_DINPUT", "joy_dinput", "YesNo"
@@ -656,6 +664,15 @@ OptionMenu "JoystickOptionsDefaults" protected
 	StaticTextSwitchable " ", "$JOYMNU_DISABLED2", "ConnectMessage2"
 
 	// The rest will be filled in by joystick code if devices get connected or disconnected
+}
+
+OptionMenu "HapticsOptions" protected
+{
+	Title		"$HAPMNU_TITLE"
+
+	ScaleSlider	"$JOYMNU_HAPTICS",			"haptics_strength",		0, 10, 1, "$OPTVAL_OFF"
+	StaticText	""
+	StaticText	"$HAPMNU_OPTIONS"
 }
 
 OptionMenu "JoystickOptions" protected
