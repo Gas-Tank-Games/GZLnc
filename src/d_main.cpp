@@ -121,7 +121,8 @@
 #include "wipe.h"
 #include "zwidget/window/window.h"
 
-#include <boxer/boxer.h> // need this for literally one thing lmao
+#ifdef _WIN32
+#include <windows.h>
 
 #ifdef __unix__
 #include "i_system.h"  // for SHARE_DIR
@@ -2050,7 +2051,8 @@ static void AddAutoloadFiles(const char *autoname, std::vector<std::string>& all
 
 	if (!(gameinfo.flags & GI_SHAREWARE) && !(Args->CheckParm("-is_launcher_launched")))
 	{
-        boxer::show("Please launch Life n' Crime from the launcher...", "Warning", boxer::Style::Warning, boxer::Buttons::OK);
+        #ifdef _WIN32
+            MessageBox(NULL, "Please launch Life n' Crime from the launcher...", "Warning", MB_OK); // MACOS AND LINUX COMING SOON...
 		exit(1); // yeah fuck you too...
 	}
 	
