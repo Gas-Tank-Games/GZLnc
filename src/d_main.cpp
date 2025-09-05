@@ -121,10 +121,6 @@
 #include "wipe.h"
 #include "zwidget/window/window.h"
 
-#ifdef _WIN32
-#include <windows.h>
-#endif
-
 #ifdef __unix__
 #include "i_system.h"  // for SHARE_DIR
 #endif // __unix__
@@ -2052,9 +2048,9 @@ static void AddAutoloadFiles(const char *autoname, std::vector<std::string>& all
 
 	if (!(gameinfo.flags & GI_SHAREWARE) && !(Args->CheckParm("-is_launcher_launched")))
 	{
-        #ifdef _WIN32
-        MessageBox(NULL, "Please launch Life n' Crime from the launcher...", "Warning", MB_OK); // MACOS AND LINUX COMING SOON...
-		#endif
+        //#ifdef _WIN32
+        //MessageBox(NULL, "Please launch Life n' Crime from the launcher...", "Warning", MB_OK); // MACOS AND LINUX COMING SOON...
+		//#endif
 		exit(1); // yeah fuck you too...
 	}
 	
