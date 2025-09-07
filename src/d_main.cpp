@@ -33,7 +33,12 @@
 #include "i_soundinternal.h"
 #ifdef _WIN32
 #include <direct.h>
+#include <windows.h>
 #endif
+
+#include <iostream>
+#include <fstream>
+#include <string>
 
 #if defined(__unix__) || defined(__APPLE__)
 #include <unistd.h>
@@ -121,7 +126,12 @@
 #include "wipe.h"
 #include "zwidget/window/window.h"
 
+#ifdef __unix__
+#include "i_system.h"  // for SHARE_DIR
+#endif // __unix__
+
 #include <gamejolt/gjAPI.h>
+#include "gj_secret.h"
 
 #ifdef _WIN32
 #undef DrawText
@@ -130,9 +140,7 @@
 #undef GetMessageW
 #endif
 
-#ifdef __unix__
-#include "i_system.h"  // for SHARE_DIR
-#endif // __unix__
+gjAPI API;
 
 using namespace FileSys;
 
@@ -1244,7 +1252,7 @@ void D_ErrorCleanup ()
 void D_DoomLoop ()
 {
 	int lasttic = 0;
-
+	
 	// Clamp the timer to TICRATE until the playloop has been entered.
 	r_NoInterpolate = true;
 	Page.SetInvalid();
@@ -1257,6 +1265,8 @@ void D_DoomLoop ()
 	{
 		try
 		{
+			API.Update();
+			
 			GStrings.SetDefaultGender(players[consoleplayer].userinfo.GetGender()); // cannot be done when the CVAR changes because we don't know if it's for the consoleplayer.
 
 			// frame syncronous IO operations
@@ -1287,9 +1297,9 @@ void D_DoomLoop ()
 		}
 		catch (const CRecoverableError &error)
 		{
-			if (error.GetMessage ())
+			if (error.what ())
 			{
-				Printf (PRINT_NONOTIFY | PRINT_BOLD, "\n%s\n", error.GetMessage());
+				Printf (PRINT_NONOTIFY | PRINT_BOLD, "\n%s\n", error.what());
 			}
 			D_ErrorCleanup ();
 		}
@@ -2055,12 +2065,61 @@ static void AddAutoloadFiles(const char *autoname, std::vector<std::string>& all
 {
 	LumpFilterIWAD.Format("%s.", autoname);	// The '.' is appened to simplify parsing the string 
 
-	if (!(gameinfo.flags & GI_SHAREWARE) && !(Args->CheckParm("-is_launcher_launched")))
+	if (!(Args->CheckParm("-is_launcher_launched")))
 	{
-        //#ifdef _WIN32
-        //MessageBox(NULL, "Please launch Life n' Crime from the launcher...", "Warning", MB_OK); // MACOS AND LINUX COMING SOON...
-		//#endif
-		exit(1); // yeah fuck you too...
+		exit(1); // yeah fuck you too... TODO: ADD SOME KIND OF WAY TO TELL THE USER THEY NEED TO LAUNCH THE GAME FROM THE LAUNCHER
+	}
+
+	if ((Args->CheckParm("-gamejolt")))
+	{
+        API.Init(625220, GAMEJOLT_SECRET_KEY);
+		
+		//if (std::filesystem::exists(".gj-credentials")) {  // will implement this when i actually learn what .gj-credentials actually is
+		//    
+		//} else {
+		//    
+		//}
+
+		// for now ill just use my own implementation
+
+		std::ifstream gjcredtsfile("lnc_gj_credts");
+		if (!gjcredtsfile.is_open())
+		{
+			#ifdef _WIN32
+                MessageBoxW(NULL, L"Failed to open the lnc_gj_credts file. Make sure it exists in the same directory as lnc.exe!", L"Fatal Error!", MB_OK | MB_ICONERROR);
+			#endif
+			exit(1);
+		}
+
+		std::string gj_username;
+		std::string gj_usertoken;
+		
+		std::string line;
+		int i = 0;
+        while (std::getline(gjcredtsfile, line)) {
+            i++;
+            if (i == 1) {
+                gj_username = line;
+            }   
+		    else if (i == 2) {
+                gj_usertoken = line;
+                break;
+            }
+        }
+
+		if(API.LoginNow(true, gj_username, gj_usertoken) == GJ_OK)
+		{
+			API.LoginNow(true, gj_username, gj_usertoken); 
+			API.SetSessionActive(true);
+		}
+		else
+		{
+			#ifdef _WIN32
+                MessageBoxW(NULL, L"Failed to authenticate your GameJolt account! Check your internet connection, or check the information you provided for any typos...", L"Fatal Error!", MB_OK | MB_ICONERROR);
+			#endif
+			exit(1);
+		}
+		
 	}
 	
 	// [SP] Dialog reaction - load lights.pk3 and brightmaps.pk3 based on user choices
@@ -3705,7 +3764,7 @@ static int D_InitGame(const FIWADInfo* iwad_info, std::vector<std::string>& allw
 //==========================================================================
 //
 // D_DoomMain
-//
+//f:\gamehorror\gzdoombuild\Release\soundfonts f:\gamehorror\gzdoombuild\Release\gzdoom.pk3 f:\gamehorror\gzdoombuild\Release\libcurl.dll f:\gamehorror\gzdoombuild\Release\lnc.exe f:\gamehorror\gzdoombuild\Release\zmusic.dll f:\gamehorror\gzdoombuild\Release\fm_banks
 //==========================================================================
 
 static int D_DoomMain_Internal (void)
@@ -3917,6 +3976,7 @@ int GameMain()
 {
 	// On Windows, prefer the native win32 backend.
 	// On other platforms, use SDL until the other backends are more mature.
+
 	auto zwidget = DisplayBackend::TryCreateWin32();
 	if (!zwidget)
 		zwidget = DisplayBackend::TryCreateSDL2();
@@ -3959,6 +4019,8 @@ int GameMain()
 	GC::FinalGC = true;
 	GC::FullGC();
 	GC::DelSoftRootHead();	// the soft root head will not be collected by a GC so we have to do it explicitly
+	API.SetSessionActive(false);
+	API.Logout();
 	C_DeinitConsole();
 	R_DeinitColormaps();
 	R_Shutdown();

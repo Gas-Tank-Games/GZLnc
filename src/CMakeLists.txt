@@ -1361,6 +1361,35 @@ add_dependencies( zdoom revision_check )
 target_include_directories( zdoom PRIVATE ${CMAKE_SOURCE_DIR}/gamejolt)
 target_include_directories( zdoom PRIVATE ${CMAKE_SOURCE_DIR}/curl)
 
+set(GAMEJOLT_SRC
+    ${CMAKE_SOURCE_DIR}/src/gamejolt/Base64.cpp
+    ${CMAKE_SOURCE_DIR}/src/gamejolt/gjAPI.cpp
+    ${CMAKE_SOURCE_DIR}/src/gamejolt/gjDataItem.cpp
+    ${CMAKE_SOURCE_DIR}/src/gamejolt/gjNetwork.cpp
+    ${CMAKE_SOURCE_DIR}/src/gamejolt/gjScore.cpp
+    ${CMAKE_SOURCE_DIR}/src/gamejolt/gjTrophy.cpp
+    ${CMAKE_SOURCE_DIR}/src/gamejolt/gjUser.cpp
+    ${CMAKE_SOURCE_DIR}/src/gamejolt/MD5.cpp
+)
+
+target_sources( zdoom PRIVATE ${GAMEJOLT_SRC} )
+
+if(WIN32)
+    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+        set(CURL_LIB_PATH "${CMAKE_SOURCE_DIR}/bin/windows/libcurl/x64/libcurl.lib")
+    else()
+        set(CURL_LIB_PATH "${CMAKE_SOURCE_DIR}/bin/windows/libcurl/x86/libcurl.lib")
+    endif()
+elseif(UNIX AND NOT APPLE)
+    set(CURL_LIB_PATH "${CMAKE_SOURCE_DIR}/bin/linux/libcurl/libcurl.so")
+endif()
+
+target_include_directories(zdoom PRIVATE ${CMAKE_SOURCE_DIR}/src/curl)
+
+if(CURL_LIB_PATH)
+    target_link_libraries(zdoom ${CURL_LIB_PATH})
+endif()
+
 # Due to some quirks, we need to do this in this order
 if( NOT ZDOOM_OUTPUT_OLDSTYLE )
 	# RUNTIME_OUTPUT_DIRECTORY does not exist in CMake 2.4.

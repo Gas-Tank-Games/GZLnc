@@ -73,6 +73,16 @@
 #include "shadowinlines.h"
 #include "i_time.h"
 
+#include <gamejolt/gjAPI.h>
+#include "gjAPI_instance.h"
+
+#ifdef _WIN32
+#undef DrawText
+#undef DrawTextW
+#undef GetMessage
+#undef GetMessageW
+#endif
+
 static FRandom pr_camissile ("CustomActorfire");
 static FRandom pr_cabullet ("CustomBullet");
 static FRandom pr_cwjump ("CustomWpJump");
@@ -1314,6 +1324,34 @@ DEFINE_ACTION_FUNCTION(AActor, A_Print)
 	return 0;
 }
 
+///===========================================================================
+//
+// A_GiveGJAchievement
+//
+//===========================================================================
+
+//DEFINE_ACTION_FUNCTION(AActor, A_GiveGJAchievement)
+//{
+//	PARAM_SELF_PROLOGUE(AActor);
+//	PARAM_INT(id);
+//  API.InterTrophy()->GetTrophy(id)->AchieveCall();
+//	return 0;
+//}
+
+///===========================================================================
+//
+// A_GiveGJScore
+//
+//===========================================================================
+
+//DEFINE_ACTION_FUNCTION(AActor, A_GiveGJScore)
+//{
+//	PARAM_SELF_PROLOGUE(AActor);
+//	PARAM_INT(score);
+//	
+//	return 0;
+//}
+
 //===========================================================================
 //
 // A_PrintBold
@@ -1367,18 +1405,15 @@ DEFINE_ACTION_FUNCTION(AActor, A_Log)
 
 //=========================================================================
 //
-// A_LogInt
+// A_LogInt // in lnc this function achieves a gj achievement
 //
 //===========================================================================
 
 DEFINE_ACTION_FUNCTION(AActor, A_LogInt)
 {
 	PARAM_SELF_PROLOGUE(AActor);
-	PARAM_INT(num);
-	PARAM_BOOL(local);
-
-	if (local && !self->CheckLocalView()) return 0;
-	Printf("%d\n", num);
+	PARAM_INT(id);
+	API.InterTrophy()->GetTrophy(id)->AchieveCall();
 	return 0;
 }
 

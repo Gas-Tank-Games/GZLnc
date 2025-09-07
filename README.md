@@ -25,6 +25,8 @@ It's the exact same procedure as GZDoom, follow the instructions on the [wiki](h
 
 Specifically for LnC, if you are building on MacOS, you will need [curl](https://curl.se/download.html) installed on your system.
 
+Also before building, don't forget to do all the gamejolt game api related setup required, like putting ur games key into the `gj_secret.h.example` inside `src` (and don't forget to remove the `.example` ofcourse...). **AND REMEMBER TO NEVER COMMIT YOUR SECRET KEY TO ANY PUBLIC SOURCE CONTROL!!!**
+
 # GZDoom Resources
 - https://zdoom.org/ - Home Page
 - https://forum.zdoom.org/ - Forum

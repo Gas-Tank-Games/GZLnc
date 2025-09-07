@@ -43,3 +43,6 @@ fmodapi*linux/
 /mapfiles_release/*.map
 /AppDir
 .cache/
+
+# gamejolt secret
+/src/gj_secret.h
